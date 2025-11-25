@@ -5,9 +5,6 @@
   <title>Movie CDN Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Video.js CSS -->
-  <link href="https://vjs.zencdn.net/8.5.2/video-js.css" rel="stylesheet" />
-
   <style>
     body {
       background: #101014;
@@ -17,8 +14,24 @@
       padding: 20px;
     }
     h2 { margin-bottom: 20px; }
-    .buttons { margin-top: 15px; }
-    button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+    .video-options {
+      margin-bottom: 15px;
+    }
+    .video-options button, .video-options a {
+      padding: 10px 15px;
+      margin: 5px;
+      cursor: pointer;
+      text-decoration: none;
+      color: #fff;
+      background: #ffcc00;
+      border: none;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    .video-options button:hover, .video-options a:hover {
+      background: #e6b800;
+    }
+    .video-container { display: none; margin-top: 20px; }
     footer { margin-top: 25px; font-size: 0.9rem; color: #ccc; }
   </style>
 </head>
@@ -26,28 +39,19 @@
 
 <h2>Movie CDN Player</h2>
 
-<!-- Video.js Player -->
-<video
-  id="my-video"
-  class="video-js vjs-big-play-centered"
-  controls
-  preload="auto"
-  width="640"
-  height="360"
-  data-setup='{}'
->
-  <source src="https://cdn.videy.co/MNVfEhaZ1.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
-
-<div class="buttons">
-  <!-- Download -->
-  <a href="https://cdn.videy.co/MNVfEhaZ1.mp4" download>
-    <button>Download Video</button>
-  </a>
-
-  <!-- Copy Link -->
+<!-- Options shown first -->
+<div class="video-options">
+  <button onclick="startVideo()">Play Video</button>
+  <a href="https://cdn.videy.co/MNVfEhaZ1.mp4" download>Download Video</a>
   <button onclick="copyLink()">Copy Video Link</button>
+</div>
+
+<!-- Video container hidden initially -->
+<div class="video-container">
+  <video id="myVideo" controls preload="metadata" width="640">
+    <source src="https://cdn.videy.co/MNVfEhaZ1.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
 </div>
 
 <footer>
@@ -71,13 +75,16 @@ _Hasync.push(['Histats.track_hits', '']);
 </script>
 <noscript><a href="/" target="_blank"><img src="//sstatic1.histats.com/0.gif?4993356&101" alt="stats online" border="0"></a></noscript>
 
-<!-- Video.js JS -->
-<script src="https://vjs.zencdn.net/8.5.2/video.min.js"></script>
-
 <script>
+function startVideo() {
+  document.querySelector('.video-options').style.display = 'none';
+  document.querySelector('.video-container').style.display = 'block';
+  document.getElementById('myVideo').play();
+}
+
 function copyLink() {
-  navigator.clipboard.writeText("https://cdn.videy.co/MNVfEhaZ1.mp4");
-  alert("Video link copied!");
+  navigator.clipboard.writeText('https://cdn.videy.co/MNVfEhaZ1.mp4');
+  alert('Video link copied!');
 }
 </script>
 
